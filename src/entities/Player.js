@@ -1,3 +1,5 @@
+import { DIAGONAL_FACTOR } from "../constants";
+
 export default function makePlayer(k, posvec2, speed) {
     const player = k.add([
         k.sprite("player", {anim: "walk-down-idle"})
@@ -13,6 +15,115 @@ export default function makePlayer(k, posvec2, speed) {
         },
     ]);
 // player ctrlsss
+    let isMouseDown = false;
+    const game = document.getElementById("game");
+    game.addEventListener("focusout", () => {
+        isMouseDown = false;
+    });
+    game.addEventListener("mousedown", () => {
+        isMouseDown = true;
+    });
+    game.addEventListener("mouseup", () => {
+        isMouseDown = false;
+    });
+    game.addEventListener("touchstart", () => {
+        isMouseDown = true;
+    });
+    game.addEventListener("touchend", () => {
+        isMouseDown = false;
+    });
+    game.addEventListener("focusout", () => {
+        isMouseDown = false;
+    });
+    game.addEventListener("focusout", () => {
+        isMouseDown = false;
+    });
+
+    player.onUpdate(() => {
+        if (!k.camPos().eq(player.pos)) {
+            k.tween(
+                k.camPos(),
+                player.pos,
+                0.2,
+                (newPos) => k.camPos(newPos),
+                k.easings.linear
+            );
+        }
+        
+        player.direction = k.vec2(0,0);
+        const worldMousePos = k.toWorld(k.mousePos());
+        if (isMouseDown) {
+            player.direction = worldMousePos.sub(player.pos).unit();
+        }
+
+        if (player.direction.eq(k.vec2(0,0)) &&
+        !player.getCurAnim().name.includes("idle")
+        ) {
+            player.play(`${player.directionName}-idle`);
+            return;
+        }
+
+        if (
+            player.direction.x > 0 &&
+            player.direction.y > -0.5 &&
+            player.direction.y < 0.5
+        )   {
+            player.directionName = "walk-right";
+        }
+
+        if (
+            player.direction.x < 0 &&
+            player.direction.y > -0.5 &&
+            player.direction.y < 0.5
+        )
+            player.directionName = "walk-left";
+
+        if (player.direction.x < 0 && player.direction.y < -0.8)
+            player.directionName = "walk-up";
+
+        if (player.direction.x < 0 && player.direction.y > 0.8)
+            player.directionName = "walk-down";
+
+        if (
+            player.direction.x < 0 && 
+            player.direction.y > -0.8 &&
+            player.direction.y < -0.5
+        )
+            player.directionName = "walk-left-up";
+
+        if (
+            player.directionName.x < 0 &&
+            player.directionName.y > 0.5 &&
+            player.directionName.y < 0.8
+        )
+            player.directionName = "walk-left-down";
+
+        if (
+            player.direction.x > 0 &&
+            player.direction.y < -0.5 &&
+            player.direction.y > -0.8
+        )
+            player.directionName = "walk-right-up";
+
+        if (
+            player.direction.x > 0 &&
+            player.direction.y > 0.5 &&
+            player.direction.y < 0.8
+        )
+            player.directionName = "walk-right-down";
+
+        if (player.getCurAnim().name !== player.directionName) {
+            player.play(player.directionName);
+        }
+
+        if (player.direction.x && player.direction.y) {
+            player.move(player.direction.scale(DIAGONAL_FACTOR * speed));
+        }
+
+        player.move(player.direction.scale(speed));
+    });
+
+
     return player;
 
 }
