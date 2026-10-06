@@ -49,6 +49,16 @@ export default async function initGame() {
     // TODO: importing the shader
     k.loadShaderURL("tiledPattern", null, "/shaders/tiledPattern.frag")
 
+const setInitCamZoomValue = () => {
+    if (k.width() < 1000) {
+        k.setCamScale(k.vec2(0.5));
+        return;
+    }
+    k.setCamScale(k.vec2(0.5));
+};
+console.log("width:", k.width());
+setInitCamZoomValue();
+
     const tiledBackground = k.add([
         k.uvquad(k.width(), k.height()),
         k.shader("tiledPattern", () => ({
