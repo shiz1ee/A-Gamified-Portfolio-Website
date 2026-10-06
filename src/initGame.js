@@ -1,3 +1,5 @@
+import { PALETTE } from "./constants";
+import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
 
 export default async function initGame() {
@@ -24,7 +26,7 @@ export default async function initGame() {
             "walk-right-down-idle": 28,
         }
     });
-    k.loadFont("ibm-regular", "./fonts/IBMPlexSans-regular.ttf");
+    k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
     k.loadFont("ibm-bold", "./fonts/IBMPlexSans-Bold.ttf");
     k.loadSprite("github-logo", "./logos/github-logo.png");
     k.loadSprite("linkdin-logo", "./logos/linkedin-logo.png");
@@ -35,13 +37,37 @@ export default async function initGame() {
     k.loadSprite("typescript-logo", "./logos/ts-logo.png");
     k.loadSprite("react-logo", "./logos/react-logo.png");
     k.loadSprite("nextjs-logo", "./logos/nextjs-logo.png");
-    k.loadSprite("postgress-logo", "./logos/postgress-logo.png");
+    k.loadSprite("postgres-logo", "./logos/postgres-logo.png");
     k.loadSprite("html-logo", "./logos/html-logo.png");
     k.loadSprite("css-logo", "/logos/css-logo.png");
     k.loadSprite("tailwind-logo", "./logos/tailwind-logo.png");
     k.loadSprite("python-logo", "./logos/python-logo.png");
-    k.loadSprite("email-logo", "./logos/email-logos.png");
+    k.loadSprite("email-logo", "./logos/email-logo.png");
     k.loadSprite("sonic-js", "./projects/sonic-js.png");
     k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
     k.loadSprite("platformer-ts", "./projects/platformer-js.png");
+    // TODO: importing the shader
+    k.loadShaderURL("tiledPattern", null, "/shaders/tiledPattern.frag")
+
+    const tiledBackground = k.add([
+        k.uvquad(k.width(), k.height()),
+        k.shader("tiledPattern", () => ({
+            u_time: k.time() /20,
+            u_color1: k.Color.fromHex(PALETTE.color1),
+            u_color2: k.Color.fromHex(PALETTE.color2),
+            u_speed: k.vec2(1, -1),
+            u_aspect: k.width() / k.height(),
+            u_size: 5
+        })),
+        k.pos(0),
+        k.fixed()
+    ]);
+
+    k.onResize(() => {
+        tiledBackground.width = k.width();
+        tiledBackground.height = k.height();
+        tiledBackground.uniform.u_aspect = k.width() / k.height()
+    });
+
+    makePlayer(k, k.vec2(k.center()), 700)
 }
