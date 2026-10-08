@@ -1,6 +1,7 @@
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
+import { cameraZoomValueAtom, store } from "./store";
 
 export default async function initGame() {
     const k = makeKaplayCtx();
@@ -52,10 +53,20 @@ export default async function initGame() {
 const setInitCamZoomValue = () => {
     if (k.width() < 1000) {
         k.setCamScale(k.vec2(0.5));
+        store.set(cameraZoomValueAtom, 0.5);
         return;
     }
-    k.setCamScale(k.vec2(0.5));
+    k.setCamScale(k.vec2(0.5)); // Standard zoom for desktop
+    store.set(cameraZoomValueAtom, 0.5); 
 };
+
+k.onUpdate(() => {
+    const camZoomValue = store.get(cameraZoomValueAtom);
+    if (camZoomValue !== k.getCamScale().x) {
+        k.setCamScale(k.vec2(camZoomValue));
+    }
+});
+
 console.log("width:", k.width());
 setInitCamZoomValue();
 
