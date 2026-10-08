@@ -91,11 +91,33 @@ setInitCamZoomValue();
         tiledBackground.uniform.u_aspect = k.width() / k.height()
     });
 
-    makeSection(k, k.vec2(k.center().x, k.center().y - 400), "About", (parent) => {
+    makeSection(
+        k,
+        k.vec2(k.center().x, k.center().y - 400),
+        "About",
+        (parent) => {}
+    );
 
-    });
+    makeSection(
+        k,
+        k.vec2(k.center().x - 400, k.center().y),
+        "Skills",
+        (patent) => {}
+    );
 
-    makeSection(k, k.vec2(k.center().x - 400, k.center().y), "Skills");
+    makeSection(
+        k,
+        k.vec2(k.center().x + 400, k.center().y),
+        "Experience",
+        (patent) => {}
+    );
+
+    makeSection(
+        k,
+        k.vec2(k.center().x, k.center().y + 400),
+        "Projects",
+        (patent) => {}
+    );
 
     makePlayer(k, k.vec2(k.center()), 700)
 }
