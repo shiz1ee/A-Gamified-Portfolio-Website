@@ -1,3 +1,4 @@
+import makeSection from "./components/Section";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
@@ -89,6 +90,12 @@ setInitCamZoomValue();
         tiledBackground.height = k.height();
         tiledBackground.uniform.u_aspect = k.width() / k.height()
     });
+
+    makeSection(k, k.vec2(k.center().x, k.center().y - 400), "About", (parent) => {
+
+    });
+
+    makeSection(k, k.vec2(k.center().x - 400, k.center().y), "Skills");
 
     makePlayer(k, k.vec2(k.center()), 700)
 }
