@@ -5,6 +5,8 @@ import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
 
 export default async function initGame() {
+
+    const generalData = await (await fetch('./configs/generalData.json')).json();
     const k = makeKaplayCtx();
     k.loadSprite("player", "./sprites/player.png", {
         sliceX: 4,
@@ -95,7 +97,26 @@ setInitCamZoomValue();
         k,
         k.vec2(k.center().x, k.center().y - 400),
         "About",
-        (parent) => {}
+        (parent) => {
+            const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
+
+            container.add([
+                k.text(generalData.header.title, {font: "ibm-bold", size: 88 }),
+            k.color(k.Color.fromHex(PALETTE.color1)),
+            k.pos(395, 0),
+            k.opacity(0),
+            ]);
+
+            container.add([
+                k.text(generalData.header.subtitle, {
+                    font: "ibm-bold",
+                    size: 48,
+                }),
+                k.color(k.Color.fromHex(PALETTE.color1)),
+                k.pos(485, 100),
+                k.opacity(0),
+            ]);
+        }
     );
 
     makeSection(
