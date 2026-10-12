@@ -1,3 +1,21 @@
+## Gamified Portfolio Website
+made with using react and vite.
+
+## WORK IN PROGRESS
+
+
+
+## Features 
+- 8 directional controls
+- custom shaders
+- movable player
+- collision boxes which open other components
+
+## Will add more features in future. 
+
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
