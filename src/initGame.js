@@ -1,12 +1,17 @@
+import makeEmailIcon from "./components/EmailIcon";
 import makeSection from "./components/Section";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
+import makeSocialIcon from "./components/SocialIcon";
+import { makeAppear } from "./utils";
 
 export default async function initGame() {
 
     const generalData = await (await fetch('./configs/generalData.json')).json();
+    const socialsData = await (await fetch("./configs/socialsData.json")).json();
+
     const k = makeKaplayCtx();
     k.loadSprite("player", "./sprites/player.png", {
         sliceX: 4,
@@ -77,8 +82,8 @@ setInitCamZoomValue();
         k.uvquad(k.width(), k.height()),
         k.shader("tiledPattern", () => ({
             u_time: k.time() /20,
-            u_color1: k.Color.fromHex(PALETTE.color1),
-            u_color2: k.Color.fromHex(PALETTE.color2),
+            u_color1: k.Color.fromHex(PALETTE.bg1),
+            u_color2: k.Color.fromHex(PALETTE.bg2),
             u_speed: k.vec2(1, -1),
             u_aspect: k.width() / k.height(),
             u_size: 5
@@ -96,7 +101,7 @@ setInitCamZoomValue();
     makeSection(
         k,
         k.vec2(k.center().x, k.center().y - 400),
-        "About",
+        generalData.section1Name,
         (parent) => {
             const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
 
@@ -116,14 +121,34 @@ setInitCamZoomValue();
                 k.pos(485, 100),
                 k.opacity(0),
             ]);
+
+            const socialContainer = container.add([k.pos(130, 0), k.opacity(0)]);
+
+            for (const socialData of socialsData) {
+                if (socialData.name == "Email") {
+                    makeEmailIcon(k, socialContainer, k.vec2(socialData.pos.x, socialData.pos.y), socialData.imageData, socialData.name, socialData.email);
+                    continue;
+                }
+
+                makeSocialIcon(k, socialContainer, k.vec2(socialData.pos.x, socialData.pos.y), socialData.imageData, socialData.name, socialData.link, socialData.description);
+
+            }
+
+            makeAppear(k, container);
+            makeAppear(k, socialContainer);
         }
     );
 
     makeSection(
         k,
         k.vec2(k.center().x - 400, k.center().y),
-        "Skills",
-        (patent) => {}
+        generalData.section2Name,
+        (patent) => {
+            const container = parent.add([
+                k.opacity(0),
+                k.pos(-300, 0)
+            ])
+        }
     );
 
     makeSection(

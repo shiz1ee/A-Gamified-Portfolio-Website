@@ -1,6 +1,7 @@
 import { PALETTE } from "../constants";
 import makeIcon from "./Icon";
 import {isSocialModelVisibleAtom, selectedLinkAtom, selectedLinkDescriptionAtom, store} from "../store"
+import { opacityTrickDopwn } from "../utils";
 
 export default function makeSocialIcon(
     k,
@@ -21,7 +22,7 @@ export default function makeSocialIcon(
 
     const linkSwitch = socialIcon.add([
         k.circle(30),
-        k.color(k.color.fromHex(PALETTE.color1)),
+        k.color(k.Color.fromHex(PALETTE.color1)),
         k.anchor("center"),
         k.area(),
         k.pos(0, 150),
@@ -34,7 +35,7 @@ export default function makeSocialIcon(
         store.set(selectedLinkDescriptionAtom, description);
     });
 
-    //TODO: opacituy modifier for child 
+     opacityTrickDopwn(parent, [subtitleText, linkSwitch]);
 
     return socialIcon;
 }

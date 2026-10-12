@@ -1,3 +1,4 @@
+import { opacityTrickDopwn } from "../utils";
 import makeIcon from "./Icon";
 
 export default function makeSkillIcon(k, parent, posVec2, imageData, subtitle) {
@@ -17,7 +18,7 @@ export default function makeSkillIcon(k, parent, posVec2, imageData, subtitle) {
         icon.applyImpulse(player.direction.scale(1000));
     });
 
-    // TODO : opacity modifier for child game objectsss
+    opacityTrickDopwn(parent, [subtitleText]);
 
     return icon;
 }

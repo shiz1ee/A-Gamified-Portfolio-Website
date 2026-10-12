@@ -1,4 +1,5 @@
 import { PALETTE } from "../constants";
+import { isSocialModelVisibleAtom, store } from "../store";
 
 export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
     const icon = parent.add([
@@ -20,5 +21,5 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
         k.opacity(0),
     ]);
 
-    return [isSocialModelVisibleAtom, subtitleText];
+    return [subtitleText, icon];
 }
