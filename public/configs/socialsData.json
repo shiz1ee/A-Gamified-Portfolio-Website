@@ -21,7 +21,7 @@
     "pos": { "x": 700, "y": 250 },
     "name": "X",
     "description": "Here is my X/Twitter, I don't really use it much.",
-    "link": "https://x.com/jslegenddev",
+    "link": "",
     "imageData": {
       "name": "x-logo",
       "width": 128,
@@ -32,7 +32,7 @@
     "pos": { "x": 900, "y": 250 },
     "name": "Substack",
     "description": "I make written JavaScript/TypeScript game dev tutorials there.",
-    "link": "https://jslegenddev.substack.com/",
+    "link": "",
     "imageData": {
       "name": "substack-logo",
       "width": 128,
