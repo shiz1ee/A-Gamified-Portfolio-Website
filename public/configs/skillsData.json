@@ -1,0 +1,8 @@
+[
+    { "name": "JavaScript", "pos": { "x": -160, "y": 220 }, "imageData": { "name": "javascript-logo", "width": 100, "height": 100 } },
+    { "name": "React", "pos": { "x": -160, "y": 220 }, "imageData": { "name": "react-logo", "width": 100, "height": 100 } },
+    { "name": "HTML", "pos": { "x": -160, "y": 220 }, "imageData": { "name": "html-logo", "width": 100, "height": 100 } },
+    { "name": "CSS", "pos": { "x": -160, "y": 220 }, "imageData": { "name": "css-logo", "width": 100, "height": 100 } },
+     { "name": "Python", "pos": { "x": -160, "y": 220 }, "imageData": { "name": "python-logo", "width": 100, "height": 100 } }
+
+]

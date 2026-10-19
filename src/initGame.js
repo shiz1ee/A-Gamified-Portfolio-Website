@@ -6,11 +6,14 @@ import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
 import makeSocialIcon from "./components/SocialIcon";
 import { makeAppear } from "./utils";
+import makeSkillIcon from "./components/SkillIcon";
+
 
 export default async function initGame() {
 
     const generalData = await (await fetch('./configs/generalData.json')).json();
     const socialsData = await (await fetch("./configs/socialsData.json")).json();
+    const skillData = await (await fetch("./configs/skillsData.json")).json();
 
     const k = makeKaplayCtx();
     k.loadSprite("player", "./sprites/player.png", {
@@ -48,7 +51,7 @@ export default async function initGame() {
     k.loadSprite("nextjs-logo", "./logos/nextjs-logo.png");
     k.loadSprite("postgres-logo", "./logos/postgres-logo.png");
     k.loadSprite("html-logo", "./logos/html-logo.png");
-    k.loadSprite("css-logo", "/logos/css-logo.png");
+    k.loadSprite("css-logo", "./logos/css-logo.png");
     k.loadSprite("tailwind-logo", "./logos/tailwind-logo.png");
     k.loadSprite("python-logo", "./logos/python-logo.png");
     k.loadSprite("email-logo", "./logos/email-logo.png");
@@ -143,7 +146,7 @@ setInitCamZoomValue();
         k,
         k.vec2(k.center().x - 400, k.center().y),
         generalData.section2Name,
-        (patent) => {
+        (parent) => {
             const container = parent.add([
                 k.opacity(0),
                 k.pos(-300, 0)
@@ -155,15 +158,36 @@ setInitCamZoomValue();
         k,
         k.vec2(k.center().x + 400, k.center().y),
         "Experience",
-        (patent) => {}
+        (parent) => {}
     );
 
     makeSection(
         k,
         k.vec2(k.center().x, k.center().y + 400),
         "Projects",
-        (patent) => {}
+        (parent) => {}
     );
 
     makePlayer(k, k.vec2(k.center()), 700)
+
+    makeSection(
+        k,
+        k.vec2(k.center().x - 400, k.center().y),
+        generalData.section2Name,
+        (parent) => {
+            const container = parent.add([k.pos(0, 0), k.opacity(0)]);
+
+            for (const skill of skillData) {
+                makeSkillIcon(
+                    k,
+                    container,
+                    k.vec2(skill.pos.x, skill.pos.y),
+                    skill.imageData,
+                    skill.name
+                )
+            }
+
+            makeAppear(k, container);
+        }
+    )
 }

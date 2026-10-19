@@ -21,5 +21,5 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
         k.opacity(0),
     ]);
 
-    return [subtitleText, icon];
+    return [icon, subtitleText];
 }
