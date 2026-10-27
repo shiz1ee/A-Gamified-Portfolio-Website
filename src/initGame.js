@@ -16,6 +16,7 @@ export default async function initGame() {
     const skillData = await (await fetch("./configs/skillsData.json")).json();
 
     const k = makeKaplayCtx();
+    k.setBackground(k.Color.fromHex("#1a1a2e"))
     k.loadSprite("player", "./sprites/player.png", {
         sliceX: 4,
         sliceY: 8,
@@ -38,6 +39,63 @@ export default async function initGame() {
             "walk-right-down-idle": 28,
         }
     });
+    k.loadSprite("ground", "./tiles/ground.png", {sliceX: 11, sliceY: 9});
+    const TILE_SCALE = 4;
+    const GRID_W = 20;
+    const GRID_H = 20;
+    const originX = k.center().x - (GRID_W * 16 * TILE_SCALE) / 2;
+    const originY = k.center().y - (GRID_H * 16 * TILE_SCALE) / 2;
+
+    for (let y=0; y < GRID_H; y++) {
+        for (let x = 0; x < GRID_W; x++) {
+            k.add([
+                k.sprite("ground", {frame: 12}),
+                k.pos(originX + x * 16 * TILE_SCALE, originY + y * 16 * TILE_SCALE),
+                k.scale(TILE_SCALE),
+                k.z(0),
+            ]);
+        }
+    }
+
+    const grassFrames = [12];
+    for (let y = 0; y<GRID_H; y++) {
+        for (let x = 0; x < GRID_W; x++) {
+            const frame = grassFrames[Math.floor(Math.random() * grassFrames.length)];
+            k.add([
+                k.sprite("ground", { frame }),
+                k.pos(originX + x * 16 * TILE_SCALE, originY + y * 16 * TILE_SCALE),
+                k.scale(TILE_SCALE),
+                k.z(0),
+            ]);
+        }
+    }
+
+    k.loadSprite("dirt", "./tiles/dirt.png", { sliceX: 10, sliceY: 5});
+    const DIRT_FRAME = 11; //the only full plain dirt
+    const HUB_X = 10;
+    const HUB_Y = 10;
+    const HUB_RADIUS = 2.2;
+    const PATH_length = 5;
+
+    const dirtCells = new Set();
+
+    //cirle middle dirk
+    for (let dy= -3; dy <= 3; dy++) {
+        for (let dx = -3; dx <= 3; dx++) {
+            if (Math.hypot(dx, dy) <= HUB_RADIUS) {
+                dirtCells.add(`${HUB_X + dx}, ${HUB_Y + dy }`);
+            }
+        }
+    }
+
+    //single path going in each direc
+    for (let s = 1; s <= PATH_length; s++) {
+        dirtCells.add(`${HUB_X}, ${HUB_Y- s}`); // upp about
+        dirtCells.add(`${HUB_X- s}, ${HUB_Y}`); // left skill
+        dirtCells.add(`${HUB_X + s}, ${HUB_Y}`); // right exp
+        dirtCells.add(`${HUB_X}, ${HUB_Y + s}`); // down project
+    }
+
     k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
     k.loadFont("ibm-bold", "./fonts/IBMPlexSans-Bold.ttf");
     k.loadSprite("github-logo", "./logos/github-logo.png");
@@ -58,9 +116,7 @@ export default async function initGame() {
     k.loadSprite("sonic-js", "./projects/sonic-js.png");
     k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
     k.loadSprite("platformer-ts", "./projects/platformer-js.png");
-    // TODO: importing the shader
-    k.loadShaderURL("tiledPattern", null, "/shaders/tiledPattern.frag")
-
+    
 const setInitCamZoomValue = () => {
     if (k.width() < 1000) {
         k.setCamScale(k.vec2(0.5));
@@ -80,26 +136,6 @@ k.onUpdate(() => {
 
 console.log("width:", k.width());
 setInitCamZoomValue();
-
-    const tiledBackground = k.add([
-        k.uvquad(k.width(), k.height()),
-        k.shader("tiledPattern", () => ({
-            u_time: k.time() /20,
-            u_color1: k.Color.fromHex(PALETTE.bg1),
-            u_color2: k.Color.fromHex(PALETTE.bg2),
-            u_speed: k.vec2(1, -1),
-            u_aspect: k.width() / k.height(),
-            u_size: 5
-        })),
-        k.pos(0),
-        k.fixed()
-    ]);
-
-    k.onResize(() => {
-        tiledBackground.width = k.width();
-        tiledBackground.height = k.height();
-        tiledBackground.uniform.u_aspect = k.width() / k.height()
-    });
 
     makeSection(
         k,
