@@ -1,0 +1,9 @@
+[
+    {"id": "blounce", "title": "BLOUNCE", "tagline": "Roguelite platformer. 1st place, Pune Haven Game Jam.", "color": "#ffffff", "url": "https://irongolemm.itch.io/blounce", "x": 300, "y": 330 },
+    {"id": "boatescape", "title": "BOAT ESCAPE", "tagline": "An eerie 2D endless run game: sail down a dark Amazon river and see how far you can get.", "color": "#3dff6b", "url": "https://sainath-shinde.itch.io/boat-escape", "x": 600, "y": 330 },
+    {"id": "studycabin", "title": "STUDY CABIN", "tagline": "A cozy study timer and to-do list. it's a remake of Ghibli Study by Remy.", "color": "#2fd3c0", "url": "https://study-cabin.vercel.app/", "x": 900, "y": 330 },
+    {"id": "fatal", "title": "FATAL: IDENTITY MISSING", "tagline": "A terminal website where you find yourself while trying to convince a machine that you exist.", "color": "#ff3b3b", "url": "https://fatal-identity-missing.vercel.app/", "x": 1200, "y": 330 },
+    {"id": "cat", "title": "SAVE THE CAT", "tagline": "Play as a cat navigating handcrafted levels, collecting coins, and dodging patrolling slime across multiple stages.", "color": "#ffd84d", "url": "https://sainath-shinde.itch.io/save-the-cat", "x": 1500, "y": 330 },
+    {"id": "cafe", "title": "CAFE OF ELYSIUM", "tagline": "A cozy pixel-art cafe ordering system. Browse the menu book, fill up your tray, send the order, and watch it show up on the kitchen's ticket rail.", "color": "#e8a66d", "url": "https://cafe-of-elysium.vercel.app/", "x": 1800, "y": 330 },
+    {"id": "2dgame", "title": "2D GAME", "tagline": "A small top-down 2D game I'm building in plain JavaScript and HTML canvas, no game engine, it's made with Vite, and the maps are drawn in Tiled.", "color": "#c98f6b", "url": "https://2d-game-lake.vercel.app/", "x": 2100, "y": 330 }
+]

@@ -1,137 +1,63 @@
-import { DIAGONAL_FACTOR } from "../constants";
-import { isEmailModalVisibleAtom, isProjectModalVisibleAtom, isSocialModelVisibleAtom, store} from "../store";
+import {
+    activeCabinetAtom,
+    isEmailModalVisibleAtom,
+    isProjectModalVisibleAtom,
+    isSocialModelVisibleAtom,
+    store,
+} from "../store";
 
-export default function makePlayer(k, posvec2, speed) {
+export default function makePlayer(k, posVec2, speed) {
     const player = k.add([
-        k.sprite("player", {anim: "walk-down-idle"})
-        , k.scale(8),
+        k.sprite("player", { anim: "walk-down-idle"}),
+        k.scale(8),
         k.anchor("center"),
-        k.area({ shape: new k.Rect(k.vec2(0),5, 10 )}),
+        k.area({ shape: new k.Rect(k.vec2(0), 5, 10) }),
         k.body(),
-        k.pos(posvec2),
+        k.pos(posVec2),
+        k.z(10),
         "player",
-        {
-            direction: k.vec2(0,0),
-            directionName: "walk-down",
-        },
+        { direction: k.vec2(0, 0), facing: "down"},
     ]);
-// player ctrlsss
-    let isMouseDown = false;
-    const game = document.getElementById("game");
-    game.addEventListener("focusout", () => {
-        isMouseDown = false;
-    });
-    game.addEventListener("mousedown", () => {
-        isMouseDown = true;
-    });
-    game.addEventListener("mouseup", () => {
-        isMouseDown = false;
-    });
-    game.addEventListener("touchstart", () => {
-        isMouseDown = true;
-    });
-    game.addEventListener("touchend", () => {
-        isMouseDown = false;
-    });
-    game.addEventListener("focusout", () => {
-        isMouseDown = false;
-    });
-    game.addEventListener("focusout", () => {
-        isMouseDown = false;
-    });
 
+    const isUiOpen = () => 
+        store.get(activeCabinetAtom) ||
+        store.get(isSocialModelVisibleAtom) ||
+        store.get(isEmailModalVisibleAtom) ||
+        store.get(isProjectModalVisibleAtom);
+    
     player.onUpdate(() => {
-        if (!k.camPos().eq(player.pos)) {
-            k.tween(
-                k.camPos(),
-                player.pos,
-                0.2,
-                (newPos) => k.camPos(newPos),
-                k.easings.linear
-            );
-        }
-        
-        if (store.get(isSocialModelVisibleAtom) ||
-            store.get(isEmailModalVisibleAtom) ||
-            store.get(isProjectModalVisibleAtom)
-        )
-            return;
+        // smooth like butter cam flow
+        k.camPos(k.camPos().lerp(player.pos, 0.12));
 
+        let dir = k.vec2(0, 0);
 
-        player.direction = k.vec2(0,0);
-        const worldMousePos = k.toWorld(k.mousePos());
-        if (isMouseDown) {
-            player.direction = worldMousePos.sub(player.pos).unit();
+        if (!isUiOpen()) {
+            if (k.isKeyDown("left") || k.isKeyDown("a")) dir.x -= 1;
+            if (k.isKeyDown("right") || k.isKeyDown("d")) dir.x += 1;
+            if (k.isKeyDown("up") || k.isKeyDown("w")) dir.y -= 1;
+            if (k.isKeyDown("down") || k.isKeyDown("s")) dir.y += 1;
+
+            //tap to move
+            if (dir.len() === 0 && k.isMouseDown("left")) {
+                const toMouse = k.toWorld(k.mousePos()).sub(player.pos);
+                if (toMouse.len() > 40) dir = toMouse;
+            }
         }
 
-        if (player.direction.eq(k.vec2(0,0)) &&
-        !player.getCurAnim().name.includes("idle")
-        ) {
-            player.play(`${player.directionName}-idle`);
-            return;
+        if (dir.len() > 0) {
+            dir = dir.unit();
+            player.facing = 
+                Math.abs(dir.x) > Math.abs(dir.y)
+                    ? dir.x > 0 ? "right" : "left"
+                    : dir.y > 0 ? "down" : "up";
+            player.move(dir.scale(speed));
         }
+        player.direction = dir;
 
-        if (
-            player.direction.x > 0 &&
-            player.direction.y > -0.5 &&
-            player.direction.y < 0.5
-        )   {
-            player.directionName = "walk-right";
-        }
-
-        if (
-            player.direction.x < 0 &&
-            player.direction.y > -0.5 &&
-            player.direction.y < 0.5
-        )
-            player.directionName = "walk-left";
-
-        if (player.direction.x < 0 && player.direction.y < -0.8)
-            player.directionName = "walk-up";
-
-        if (player.direction.x < 0 && player.direction.y > 0.8)
-            player.directionName = "walk-down";
-
-        if (
-            player.direction.x < 0 && 
-            player.direction.y > -0.8 &&
-            player.direction.y < -0.5
-        )
-            player.directionName = "walk-left-up";
-
-        if (
-            player.directionName.x < 0 &&
-            player.directionName.y > 0.5 &&
-            player.directionName.y < 0.8
-        )
-            player.directionName = "walk-left-down";
-
-        if (
-            player.direction.x > 0 &&
-            player.direction.y < -0.5 &&
-            player.direction.y > -0.8
-        )
-            player.directionName = "walk-right-up";
-
-        if (
-            player.direction.x > 0 &&
-            player.direction.y > 0.5 &&
-            player.direction.y < 0.8
-        )
-            player.directionName = "walk-right-down";
-
-        if (player.getCurAnim().name !== player.directionName) {
-            player.play(player.directionName);
-        }
-
-        if (player.direction.x && player.direction.y) {
-            player.move(player.direction.scale(DIAGONAL_FACTOR * speed));
-        }
-
-        player.move(player.direction.scale(speed));
+        const animName = 
+            dir.len() > 0 ? `walk-${player.facing}` : `walk-${player.facing}-idle`;
+        if (player.getCurAnim()?.name !== animName) player.play(animName);
     });
-
 
     return player;
-
 }
