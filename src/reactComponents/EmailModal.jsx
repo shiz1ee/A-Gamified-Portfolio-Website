@@ -11,16 +11,21 @@ export default function EmailModal() {
     const buttons = [
         {
             id: 0,
-            name: "Yes",
+            name: "Copy",
             handler: () => {
                 navigator.clipboard.writeText(email);
-                setOnCopyMessage("Email copied to clipboard!");
+                setOnCopyMessage("Email Copied to clipboard");
+                setTimeout(() => {
+                    setIsVisible(false);
+                    setOnCopyMessage("");
+                }, 1200);
             },
         },
         {
             id: 1,
-            name: "No",
+            name: "Close",
             handler: () => {
+                setOnCopyMessage("");
                 setIsVisible(false);
             },
         },

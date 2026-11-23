@@ -1,10 +1,11 @@
 import makePlayer from "../entities/Player";
 import makeCabinet from "../components/Cabinet";
-
+import buildPrizeCounter from "./prizeCounter";
+import buildSkillsFloor from "./skillsFloor";
 
 export const ROOM = { w: 2400, h: 1600, wall: 120};
 
-export default function buildArcade(k, cabinets) {
+export default function buildArcade(k, cabinets, socials, skills) {
     const { w, h, wall } = ROOM;
 
     //floor
@@ -45,5 +46,7 @@ export default function buildArcade(k, cabinets) {
     ]);
 
     cabinets.forEach((c, i) => makeCabinet(k, c, i, cabinets.length));
+    buildSkillsFloor(k, skills);
+    buildPrizeCounter(k, socials, k.vec2(1750, 1150));
     makePlayer(k, k.vec2(w / 2, h -wall - 300), 700);
 }

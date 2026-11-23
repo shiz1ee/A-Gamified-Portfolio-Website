@@ -7,8 +7,8 @@ import buildArcade from "./scenes/arcade";
 export default async function initGame() {
 
     const cabinets = await (await fetch("./configs/cabinets.json")).json();
-
-
+    const socials = await (await fetch("./configs/socialsData.json")).json();
+    const skills = await (await fetch("./configs/skillsData.json")).json();
 
     const k = makeKaplayCtx();
     k.setBackground(k.Color.fromHex("#1a1a2e"))
@@ -75,5 +75,5 @@ k.onUpdate(() => {
 
 setInitCamZoomValue();
 
-buildArcade(k, cabinets);
+buildArcade(k, cabinets, socials, skills);
 }
