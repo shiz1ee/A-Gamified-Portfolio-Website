@@ -3,7 +3,7 @@ import { activeCabinetAtom, store } from "../store"
 const W = 180;
 const H = 260;
 
-export default function makeCabinet(k, data) {
+export default function makeCabinet(k, data, index, total) {
     const accent = k.Color.fromHex(data.color);
     
     const cab = k.add([
@@ -90,7 +90,9 @@ export default function makeCabinet(k, data) {
 
         if (near && k.isKeyPressed("e")) open();
 
-        screenText.opacity = Math.floor(k.time() * 2) % 2 ? 1 : 0.3;
+        const head = (k.time() * 6) % total;
+        const behind = (head - index + total) % total;
+        screenText.opacity = Math.max(0.25, 1 - behind * 0.3);
     });
 
     return cab;

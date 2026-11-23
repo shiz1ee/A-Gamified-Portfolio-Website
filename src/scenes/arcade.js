@@ -44,6 +44,6 @@ export default function buildArcade(k, cabinets) {
         k.z(6),
     ]);
 
-    for (const c of cabinets) makeCabinet(k, c);
+    cabinets.forEach((c, i) => makeCabinet(k, c, i, cabinets.length));
     makePlayer(k, k.vec2(w / 2, h -wall - 300), 700);
 }
