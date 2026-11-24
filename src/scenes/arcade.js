@@ -9,19 +9,38 @@ export default function buildArcade(k, cabinets, socials, skills) {
     const { w, h, wall } = ROOM;
 
     //floor
-    k.add([
-        k.rect(w, h),
-        k.pos(0, 0),
-        k.color(k.Color.fromHex("#14141f")),
-        k.z(0),
-    ]);
+    const floors = [
+        [0, 0, w, h, "#14141f"],
+        [-1000, 300, 1000, 1000, "#181624"],
+        [-w, 300, 1000, 1000, "#141c24"],
+    ];
+
+    for (const [x, y, fw, fh, col] of floors) {
+        k.add([
+            k.rect(fw, fh),
+            k.pos(x, y),
+            k.color(k.Color.fromHex(col)),
+            k.z(0),
+        ]);
+    }
 
     // walls
+    const DOOR_TOP = 600;
+    const DOOR_BOTTOM = 920;
     const walls = [
+        //main
         [0, 0, w, wall],
         [0, h - wall, w, wall],
-        [0, 0, wall, h],
-        [w - wall, 0, wall, h],
+        [0, 0, wall, DOOR_TOP],
+        [0, DOOR_BOTTOM, wall, h - DOOR_BOTTOM],
+        [w - wall, 0, wall, DOOR_TOP],
+        [w - wall, DOOR_BOTTOM, wall, h - DOOR_BOTTOM],
+        [-1000, 300, 1000, wall],
+        [-1000, 1180, 1000, wall],
+        [-1000, 300, wall, 1000],
+        [w, 300, 1000, wall],
+        [w, 1180, 1000, wall],
+        [w + 1000 - wall, 300, wall, 1000],
     ];
 
     for (const [x, y, ww, hh] of walls) {
@@ -45,8 +64,19 @@ export default function buildArcade(k, cabinets, socials, skills) {
         k.z(6),
     ]);
 
+    //door label
+    for (const [label, lx] of [["SKILLS ROOM", 260], ["SOCIALS ROOM", 2120]]) {
+        k.add([
+            k.text(label, { font: "ibm-bold", size: 32 }),
+            k.pos(lx, 620),
+            k.anchor("center"),
+            k.color(k.Color.fromHex("#ff4ecd")),
+            k.z(6),
+        ]);
+    }
+
     cabinets.forEach((c, i) => makeCabinet(k, c, i, cabinets.length));
-    buildSkillsFloor(k, skills);
-    buildPrizeCounter(k, socials, k.vec2(1750, 1150));
+    //buildSkillsFloor(k, skills);
+    //buildPrizeCounter(k, socials, k.vec2(1750, 1150));
     makePlayer(k, k.vec2(w / 2, h -wall - 300), 700);
 }
