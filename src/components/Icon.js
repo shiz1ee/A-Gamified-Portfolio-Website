@@ -24,10 +24,10 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle, labelS
     const iconW = imageData.width * ICON_SCALE;
     const iconH = imageData.height * ICON_SCALE;
     const labels = {
-        below: { anchor: "center", pos: k.vec2(0, iconH / 2 + 24) },
-        above: { anchor: "center", pos: k.vec2(0, -iconH / 2 - 24) },
-        right: { anchor: "left", pos: k.vec2(iconW / 2 + 16, 0) },
-        left: { anchor: "right", pos: k.vec2(-iconW / 2 - 16, 0) },
+        below: { anchor: "center", pos: k.vec2(0, iconH / 2 + 40), angle: 0,  },
+        above: { anchor: "center", pos: k.vec2(0, -iconH / 2 - 60), angle: 0, },
+        right: { anchor: "left", pos:   k.vec2(120, 35), angle: -90, },
+        left:  { anchor: "right", pos:  k.vec2(-iconW / 2 - 16, 0), angle: 90, },
     }
     const label = labels[labelSide] ?? labels.below;
 
@@ -36,6 +36,7 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle, labelS
         k.color(k.Color.fromHex(PALETTE.color1)),
         k.anchor(label.anchor),
         k.pos(label.pos),
+        k.rotate(label.angle),
         k.opacity(0),
     ]);
 
