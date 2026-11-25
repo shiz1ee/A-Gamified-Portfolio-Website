@@ -2,6 +2,7 @@ import { PALETTE } from "../constants";
 import { isEmailModalVisibleAtom, emailAtom, store } from "../store";
 import makeIcon from "./Icon";
 import { opacityTrickDopwn } from "../utils";
+import addProximityTrigger from "./proximity";
 
 export default function makeEmailIcon(
     k,
@@ -9,31 +10,27 @@ export default function makeEmailIcon(
     posVec2,
     imageData,
     subtitle,
-    email
+    email,
+    labelSide
 ) {
     const [emailIcon, subtitleText] = makeIcon(
         k,
         parent,
         posVec2,
         imageData,
-        subtitle
+        subtitle,
+        labelSide
     );
 
-    const emailSwitch = emailIcon.add([
-        k.circle(30),
-        k.color(k.Color.fromHex(PALETTE.color1)),
-        k.anchor("center"),
-        k.area(),
-        k.pos(0, 150),
-        k.opacity(0),
-    ]);
+    const home = posVec2.clone();
+    
+    addProximityTrigger(k, emailIcon, home, () => {
 
-    emailSwitch.onCollide("player", () => {
-        store.set(isEmailModalVisibleAtom, true);
-        store.set(emailAtom, email);
+        store.get(isEmailModalVisibleAtom, true);
+        store.get(emailAtom, email);
     });
 
-     opacityTrickDopwn(parent, [subtitleText, emailSwitch]);
+    opacityTrickDopwn(parent, [subtitleText]);
 
     return emailIcon;
 }

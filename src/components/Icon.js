@@ -1,11 +1,12 @@
 import { PALETTE } from "../constants";
 import { isSocialModelVisibleAtom, store } from "../store";
 
-export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
+const ICON_SCALE = 0.7;
+export default function makeIcon(k, parent, posVec2, imageData, subtitle, labelSide = "below") {
     const icon = parent.add([
         k.sprite(imageData.name, {
-            width: imageData.width,
-            height: imageData.height,
+            width: imageData.width * ICON_SCALE,
+            height: imageData.height * ICON_SCALE,
         }),
         k.anchor("center"),
         k.pos(posVec2),
@@ -20,11 +21,21 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
         icon.pos.y = baseY + Math.sin(k.time() * 2 + phase) * 6;
     });
 
+    const iconW = imageData.width * ICON_SCALE;
+    const iconH = imageData.height * ICON_SCALE;
+    const labels = {
+        below: { anchor: "center", pos: k.vec2(0, iconH / 2 + 24) },
+        above: { anchor: "center", pos: k.vec2(0, -iconH / 2 - 24) },
+        right: { anchor: "left", pos: k.vec2(iconW / 2 + 16, 0) },
+        left: { anchor: "right", pos: k.vec2(-iconW / 2 - 16, 0) },
+    }
+    const label = labels[labelSide] ?? labels.below;
+
     const subtitleText = icon.add([
         k.text(subtitle, { font: "ibm-bold", size: 32 }),
         k.color(k.Color.fromHex(PALETTE.color1)),
-        k.anchor("center"),
-        k.pos(0, 100),
+        k.anchor(label.anchor),
+        k.pos(label.pos),
         k.opacity(0),
     ]);
 

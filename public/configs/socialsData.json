@@ -1,23 +1,27 @@
 [
   {
     "name": "Github",
+    "labelSide": "right",
     "description": "Github is where I host my projects",
     "link": "https://github.com/shiz1ee",
     "imageData": { "name": "github-logo", "width": 228.6, "height": 179.5 }
   },
   {
     "name": "Email",
+    "labelSide": "right",
     "email": "sainathshinde200815@gmail.com",
     "imageData": { "name": "email-logo", "width": 128, "height": 128 }
   },
   {
     "name": "Instagram",
-    "description": "wanna talk? reach out here!",
+    "labelSide": "above",
+    "description": "Wanna talk? reach out here!",
     "link": "https://www.instagram.com/npmrunlife/",
     "imageData": { "name": "instagram-logo", "width": 128, "height": 128 }
   },
   {
     "name": "itch.io",
+    "labelSide": "above",
     "description": "My games live here.",
     "link": "https://sainath-shinde.itch.io",
     "imageData": { "name": "itch-logo", "width": 128, "height": 128 }
