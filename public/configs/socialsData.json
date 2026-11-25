@@ -9,5 +9,17 @@
     "name": "Email",
     "email": "sainathshinde200815@gmail.com",
     "imageData": { "name": "email-logo", "width": 128, "height": 128 }
+  },
+  {
+    "name": "Instagram",
+    "description": "wanna talk? reach out here!",
+    "link": "https://www.instagram.com/npmrunlife/",
+    "imageData": { "name": "instagram-logo", "width": 128, "height": 128 }
+  },
+  {
+    "name": "itch.io",
+    "description": "My games live here.",
+    "link": "https://sainath-shinde.itch.io",
+    "imageData": { "name": "itch-logo", "width": 128, "height": 128 }
   }
 ]

@@ -1,7 +1,7 @@
 import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
 import buildArcade from "./scenes/arcade";
-
+import buildMap from "./scenes/arcadeMap";
 
 
 export default async function initGame() {
@@ -9,6 +9,7 @@ export default async function initGame() {
     const cabinets = await (await fetch("./configs/cabinets.json")).json();
     const socials = await (await fetch("./configs/socialsData.json")).json();
     const skills = await (await fetch("./configs/skillsData.json")).json();
+    const map = await (await fetch("./maps/arcade.json")).json();
 
     const k = makeKaplayCtx();
     k.setBackground(k.Color.fromHex("#1a1a2e"))
@@ -52,9 +53,8 @@ export default async function initGame() {
     k.loadSprite("tailwind-logo", "./logos/tailwind-logo.png");
     k.loadSprite("python-logo", "./logos/python-logo.png");
     k.loadSprite("email-logo", "./logos/email-logo.png");
-    k.loadSprite("sonic-js", "./projects/sonic-js.png");
-    k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
-    k.loadSprite("platformer-ts", "./projects/platformer-js.png");
+    k.loadSprite("instagram-logo", "./logos/instagram-logo.png");
+    k.loadSprite("itch-logo", "./logos/itch-logo.png");
     
 const setInitCamZoomValue = () => {
     if (k.width() < 1000) {
@@ -75,5 +75,5 @@ k.onUpdate(() => {
 
 setInitCamZoomValue();
 
-buildArcade(k, cabinets, socials, skills);
+buildMap(k, map, cabinets, socials, skills);
 }

@@ -9,9 +9,16 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle) {
         }),
         k.anchor("center"),
         k.pos(posVec2),
+        k.z(5),
         k.opacity(0),
         k.offscreen({hide: true, distance: 300}),
     ]);
+
+    const baseY = posVec2.y;
+    const phase = Math.random() * Math.PI * 2;
+    icon.onUpdate(() => {
+        icon.pos.y = baseY + Math.sin(k.time() * 2 + phase) * 6;
+    });
 
     const subtitleText = icon.add([
         k.text(subtitle, { font: "ibm-bold", size: 32 }),
