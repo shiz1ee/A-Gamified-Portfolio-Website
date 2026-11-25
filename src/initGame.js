@@ -56,24 +56,18 @@ export default async function initGame() {
     k.loadSprite("instagram-logo", "./logos/instagram-logo.png");
     k.loadSprite("itch-logo", "./logos/itch-logo.png");
     
-const setInitCamZoomValue = () => {
-    if (k.width() < 1000) {
-        k.setCamScale(k.vec2(0.5));
-        store.set(cameraZoomValueAtom, 0.5);
-        return;
-    }
-    k.setCamScale(k.vec2(0.5)); // Standard zoom for desktop
-    store.set(cameraZoomValueAtom, 0.5); 
-};
+const initialZoom = k.width() < 1000 ? 0.5 : 0.45;
+
+k.setCamScale(k.vec2(initialZoom));
+store.set(cameraZoomValueAtom, initialZoom);
 
 k.onUpdate(() => {
-    const camZoomValue = store.get(cameraZoomValueAtom);
-    if (camZoomValue !== k.getCamScale().x) {
-        k.setCamScale(k.vec2(camZoomValue));
-    }
-});
-
-setInitCamZoomValue();
+    const targetZoom = store.get(cameraZoomValueAtom);
+    const currentZoom = k.getCamScale().x;
+    const smoothZoom = 
+        currentZoom + (targetZoom - currentZoom) * (1 - Math.exp(-8 * k.dt()));
+    k.setCamScale(k.vec2(smoothZoom));
+})
 
 buildMap(k, map, cabinets, socials, skills);
 }

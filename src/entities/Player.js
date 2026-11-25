@@ -24,10 +24,13 @@ export default function makePlayer(k, posVec2, speed) {
         store.get(isSocialModelVisibleAtom) ||
         store.get(isEmailModalVisibleAtom) ||
         store.get(isProjectModalVisibleAtom);
-    
+
+    k.camPos(player.pos);
     player.onUpdate(() => {
         // smooth like butter cam flow
-        k.camPos(k.camPos().lerp(player.pos, 0.12));
+        k.camPos(
+            k.camPos().lerp(player.pos, 1 - Math.exp(-6 * k.dt()))
+        );
 
         let dir = k.vec2(0, 0);
 

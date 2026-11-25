@@ -25,9 +25,8 @@ export default function makeEmailIcon(
     const home = posVec2.clone();
     
     addProximityTrigger(k, emailIcon, home, () => {
-
-        store.get(isEmailModalVisibleAtom, true);
-        store.get(emailAtom, email);
+        store.set(emailAtom, email);
+        store.set(isEmailModalVisibleAtom, true);
     });
 
     opacityTrickDopwn(parent, [subtitleText]);

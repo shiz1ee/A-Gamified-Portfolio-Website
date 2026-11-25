@@ -17,6 +17,7 @@ export default function SocialModal() {
             handler: () => {
                 window.open(selectedLink, "_blank");
                 setIsVisible(false);
+                document.getElementById("game")?.focus();
             },
         },
         {
@@ -24,6 +25,7 @@ export default function SocialModal() {
             name: "Not now",
             handler: () => {
                 setIsVisible(false);
+                document.getElementById("game")?.focus();
             },
         },
     ];

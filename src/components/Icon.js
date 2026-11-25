@@ -16,9 +16,19 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle, labelS
     ]);
 
     const baseY = posVec2.y;
+    const baseX = posVec2.x;
     const phase = Math.random() * Math.PI * 2;
+
+    const isHorizontal = labelSide === "right" || labelSide === "left";
+
     icon.onUpdate(() => {
-        icon.pos.y = baseY + Math.sin(k.time() * 2 + phase) * 6;
+        const offset = Math.sin(k.time() * 2 + phase) * 6;
+
+        if (isHorizontal) {
+            icon.pos.x = baseX + offset;
+        } else {
+            icon.pos.y = baseY + offset;
+        }
     });
 
     const iconW = imageData.width * ICON_SCALE;

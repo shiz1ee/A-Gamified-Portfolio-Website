@@ -27,9 +27,9 @@ export default function makeSocialIcon(
     const home = posVec2.clone();
 
     addProximityTrigger(k, socialIcon, home, () => {
-        store.get(isSocialModelVisibleAtom, true);
-        store.get(selectedLinkAtom, link);
-        store.get(selectedLinkDescriptionAtom, description);
+        store.set(selectedLinkAtom, link);
+        store.set(selectedLinkDescriptionAtom, description);
+        store.set(isSocialModelVisibleAtom, true);
     });
 
     opacityTrickDopwn(parent, [subtitleText]);

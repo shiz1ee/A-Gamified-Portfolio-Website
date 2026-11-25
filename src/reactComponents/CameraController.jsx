@@ -3,30 +3,35 @@ import { cameraZoomValueAtom } from "../store";
 import { useAtom } from "jotai";
 
 export default function CameraController() {
-    const [camZoomValue, setCamZoomValue] = useAtom(cameraZoomValueAtom)
+    const [camZoomValue, setCamZoomValue] =
+        useAtom(cameraZoomValueAtom);
+
+    const changeZoom = (amount) => {
+        setCamZoomValue((current) =>
+            Math.min(
+                ZOOM_MAX_BOUND,
+                Math.max(ZOOM_MIN_BOUND, current + amount)
+            )
+        );
+
+        document.getElementById("game")?.focus();
+    };
 
     return (
         <div className="camera-controller">
-        <button 
-            className="camera-controller-btn"
-        onClick= {() => {
-            const newZoomValue = camZoomValue + 0.2;
+            <button
+                className="camera-controller-btn"
+                onClick={() => changeZoom(0.1)}
+            >
+                +
+            </button>
 
-            if (newZoomValue <= ZOOM_MAX_BOUND && newZoomValue >= ZOOM_MIN_BOUND) {
-                setCamZoomValue(newZoomValue);
-            }
-        }}>+</button>
-        <button
-        className="camera-controller-btn"
-        onClick={() => {
-            const newZoomValue = camZoomValue - 0.2;
-            if (
-                newZoomValue <= ZOOM_MAX_BOUND &&
-                newZoomValue >= ZOOM_MIN_BOUND
-            ) {
-                setCamZoomValue(newZoomValue);
-            }
-        }}>-</button>
-    </div>
-   );
+            <button
+                className="camera-controller-btn"
+                onClick={() => changeZoom(-0.1)}
+            >
+                -
+            </button>
+        </div>
+    );
 }
