@@ -5,13 +5,14 @@ import {
     isSocialModelVisibleAtom,
     store,
 } from "../store";
+import updatePlayerAnimation from "./player/PlayerAnimations";
 
 export default function makePlayer(k, posVec2, speed) {
     const player = k.add([
-        k.sprite("player", { anim: "walk-down-idle"}),
-        k.scale(8),
+        k.sprite("adam-idle-animated", { anim: "down"}),
+        k.scale(4),
         k.anchor("center"),
-        k.area({ shape: new k.Rect(k.vec2(0), 5, 10) }),
+        k.area({ shape: new k.Rect(k.vec2(0), 10, 20) }),
         k.body(),
         k.pos(posVec2),
         k.z(10),
@@ -57,9 +58,7 @@ export default function makePlayer(k, posVec2, speed) {
         }
         player.direction = dir;
 
-        const animName = 
-            dir.len() > 0 ? `walk-${player.facing}` : `walk-${player.facing}-idle`;
-        if (player.getCurAnim()?.name !== animName) player.play(animName);
+        updatePlayerAnimation(player, dir.len() > 0);
     });
 
     return player;

@@ -2,7 +2,7 @@ import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
 import buildArcade from "./scenes/arcade";
 import buildMap from "./scenes/arcadeMap";
-
+import loadPlayerAssets from "./entities/player/PlayerAssets";
 
 export default async function initGame() {
 
@@ -13,6 +13,7 @@ export default async function initGame() {
 
     const k = makeKaplayCtx();
     k.setBackground(k.Color.fromHex("#1a1a2e"))
+    loadPlayerAssets(k);
     k.loadSprite("player", "./sprites/player.png", {
         sliceX: 4,
         sliceY: 8,
