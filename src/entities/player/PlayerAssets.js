@@ -45,4 +45,21 @@ export default function loadPlayerAssets(k) {
             },
         }
     );
+
+    k.loadSprite(
+        "adam-phone",
+        SPRITE_PATH + "Adam_phone_16x16.png",
+        {
+            sliceX: 9,
+            sliceY: 1,
+            anims: {
+                phone: {
+                    from: 0,
+                    to: 8,
+                    speed: 6,
+                    loop: false,
+                },
+            },
+        }
+    );
 }

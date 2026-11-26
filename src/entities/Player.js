@@ -6,7 +6,7 @@ import {
     store,
 } from "../store";
 import updatePlayerAnimation from "./player/PlayerAnimations";
-import { PlayerState, setPlayerState } from "./player/PlayerState";
+import { PlayerState, updatePlayerState } from "./player/PlayerState";
 
 export default function makePlayer(k, posVec2, speed) {
     const player = k.add([
@@ -72,14 +72,9 @@ export default function makePlayer(k, posVec2, speed) {
         }
         player.direction = dir
 
-        const nextState = dir.len() > 0
-            ? PlayerState.MOVING
-            : PlayerState.IDLE;
-        setPlayerState(player, nextState);
+        updatePlayerState(player, dir.len() > 0, k.dt());
 
-        player.stateTime += k.dt();
-
-        updatePlayerAnimation(player, dir.len() > 0);
+        updatePlayerAnimation(k, player);
     });
 
     return player;
