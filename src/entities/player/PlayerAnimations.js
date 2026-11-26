@@ -1,8 +1,13 @@
-export default function updatePlayerAnimation(player, isMoving) {
-    const targetSprite = isMoving
-        ? "adam-run"
-        : "adam-idle-animated";
 
+import { PlayerState } from "./PlayerState";
+
+const STATE_SPRITES = {
+    [PlayerState.IDLE]: "adam-idle-animated",
+    [PlayerState.MOVING]: "adam-run",
+};
+
+export default function updatePlayerAnimation(player) {
+    const targetSprite = STATE_SPRITES[player.state];
     const targetAnimation = player.facing;
 
     const animationKey = `${targetSprite}:${targetAnimation}`;

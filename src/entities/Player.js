@@ -6,6 +6,7 @@ import {
     store,
 } from "../store";
 import updatePlayerAnimation from "./player/PlayerAnimations";
+import { PlayerState, setPlayerState } from "./player/PlayerState";
 
 export default function makePlayer(k, posVec2, speed) {
     const player = k.add([
@@ -17,7 +18,14 @@ export default function makePlayer(k, posVec2, speed) {
         k.pos(posVec2),
         k.z(10),
         "player",
-        { direction: k.vec2(0, 0), facing: "down", currentAnimation: "adam-idle-animated:down"},
+        { direction: k.vec2(0, 0),
+            facing: "down",
+            currentAnimation: "adam-idle-animated:down",
+            state: PlayerState.IDLE,
+            previousState: null,
+            stateTime: 0,
+            },
+
     ]);
 
     const isUiOpen = () => 
@@ -62,7 +70,14 @@ export default function makePlayer(k, posVec2, speed) {
                     : dir.y > 0 ? "down" : "up";
             player.move(dir.scale(speed));
         }
-        player.direction = dir;
+        player.direction = dir
+
+        const nextState = dir.len() > 0
+            ? PlayerState.MOVING
+            : PlayerState.IDLE;
+        setPlayerState(player, nextState);
+
+        player.stateTime += k.dt();
 
         updatePlayerAnimation(player, dir.len() > 0);
     });
