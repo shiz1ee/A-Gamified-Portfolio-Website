@@ -17,7 +17,7 @@ export default function makePlayer(k, posVec2, speed) {
         k.pos(posVec2),
         k.z(10),
         "player",
-        { direction: k.vec2(0, 0), facing: "down"},
+        { direction: k.vec2(0, 0), facing: "down", currentAnimation: "adam-idle-animated:down"},
     ]);
 
     const isUiOpen = () => 
@@ -49,7 +49,13 @@ export default function makePlayer(k, posVec2, speed) {
         }
 
         if (dir.len() > 0) {
-            dir = dir.unit();
+            
+            if (Math.abs(dir.x) > Math.abs(dir.y)) {
+                dir = k.vec2(Math.sign(dir.x), 0);
+            } else {
+                dir = k.vec2(0, Math.sign(dir.y));
+            }
+
             player.facing = 
                 Math.abs(dir.x) > Math.abs(dir.y)
                     ? dir.x > 0 ? "right" : "left"
