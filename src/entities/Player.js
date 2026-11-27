@@ -5,10 +5,14 @@ import {
     isSocialModelVisibleAtom,
     store,
 } from "../store";
+import {
+    findNearestSeat,
+    createSeatPrompt,
+} from "./player/PlayerInteraction";
 import updatePlayerAnimation from "./player/PlayerAnimations";
 import { PlayerState, updatePlayerState } from "./player/PlayerState";
 
-export default function makePlayer(k, posVec2, speed) {
+export default function makePlayer(k, posVec2, speed, seats = []) {
     const player = k.add([
         k.sprite("adam-idle-animated", { anim: "down"}),
         k.scale(4),
@@ -27,6 +31,8 @@ export default function makePlayer(k, posVec2, speed) {
             },
 
     ]);
+    const seatPrompt = createSeatPrompt(k);
+    let nearestSeat = null;
 
     const isUiOpen = () => 
         store.get(activeCabinetAtom) ||
@@ -35,6 +41,8 @@ export default function makePlayer(k, posVec2, speed) {
         store.get(isProjectModalVisibleAtom);
 
     k.camPos(player.pos);
+
+
     player.onUpdate(() => {
         // smooth like butter cam flow
         k.camPos(
@@ -75,7 +83,21 @@ export default function makePlayer(k, posVec2, speed) {
         updatePlayerState(player, dir.len() > 0, k.dt());
 
         updatePlayerAnimation(k, player);
+        nearestSeat = isUiOpen()
+            ? null
+            : findNearestSeat(player, seats);
+        seatPrompt.opacity = nearestSeat ? 1 : 0;
+
+        if (nearestSeat) {
+            seatPrompt.pos = player.pos.add(0, -85);
+        }
     });
+
+    k.onKeyPress("f", () => {
+        if (isUiOpen() || !nearestSeat) return;
+
+        console.log("selected seat:", nearestSeat);
+    })
 
     return player;
 }

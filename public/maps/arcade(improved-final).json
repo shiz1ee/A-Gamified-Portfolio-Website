@@ -677,7 +677,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":40,
+                 "width":42,
                  "x":1675,
                  "y":90
                 }, 
@@ -689,7 +689,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":40,
+                 "width":42,
                  "x":1579,
                  "y":91
                 }, 
@@ -1178,9 +1178,54 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "name":"seats",
+         "objects":[
+                {
+                 "height":0,
+                 "id":114,
+                 "name":"seat_1",
+                 "opacity":1,
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"exitoffsetX",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"exitoffsetY",
+                         "type":"float",
+                         "value":32
+                        }, 
+                        {
+                         "name":"facing",
+                         "type":"string",
+                         "value":"down"
+                        }, 
+                        {
+                         "name":"interactionRadius",
+                         "type":"float",
+                         "value":48
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1008,
+                 "y":200
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":114,
+ "nextlayerid":10,
+ "nextobjectid":116,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.2",
