@@ -66,7 +66,7 @@ function addTIleLayers(k, map) {
 
         k.add([
             k.pos(0, 0),
-            k.z(z++),
+            k.z(layer.name === "foreground" ? 20 : z++),
             {
                 draw() {
                     if (!ready) return;
