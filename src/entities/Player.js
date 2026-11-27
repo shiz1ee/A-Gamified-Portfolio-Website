@@ -58,7 +58,8 @@ export default function makePlayer(k, posVec2, speed) {
                 dir.x !== 0
                     ? dir.x > 0 ? "right" : "left"
                     : dir.y > 0 ? "down"  : "up";
-            player.move(dir.scale(speed));
+            const speedFactor = Math.min(1, (1 / 60) / k.dt());
+            player.move(dir.scale(speed * speedFactor));
         }
         player.direction = dir
 
