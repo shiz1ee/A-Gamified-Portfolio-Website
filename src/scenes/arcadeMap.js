@@ -4,7 +4,6 @@ import makeSocialIcon from "../components/SocialIcon";
 import makeEmailIcon from "../components/EmailIcon";
 import { makeAppear } from "../utils";
 import addCollisions from "../systems/MapCollisions";
-import { loadSeats } from "../entities/player/PlayerInteraction";
 
 const MAP_SCALE = 3;
 const FLIP_MASK = 0x1fffffff;
@@ -137,8 +136,5 @@ export default function buildMap(k, map, cabinets, socials, skills) {
     });
 
 
-    const seats = loadSeats(k, map, MAP_SCALE);
-
-    console.log("Loaded seats:", seats);
-    makePlayer(k, point("spawn"), 700, seats);
+    makePlayer(k, point("spawn"), 700);
 }
