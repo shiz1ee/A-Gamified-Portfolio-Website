@@ -37,13 +37,14 @@ export default function makeIcon(k, parent, posVec2, imageData, subtitle, labelS
         below: { anchor: "center", pos: k.vec2(0, iconH / 2 + 40), angle: 0,  },
         above: { anchor: "center", pos: k.vec2(0, -iconH / 2 - 60), angle: 0, },
         right: { anchor: "left", pos:   k.vec2(120, 35), angle: -90, },
-        left:  { anchor: "right", pos:  k.vec2(-iconW / 2 - 16, 0), angle: 90, },
+        left:  { anchor: "right", pos:  k.vec2(-iconW / 2 - 20, 0), angle: 90, },
     }
     const label = labels[labelSide] ?? labels.below;
 
     const subtitleText = icon.add([
         k.text(subtitle, { font: "ibm-bold", size: 32 }),
-        k.color(k.Color.fromHex(PALETTE.color1)),
+        k.color(0, 0, 0),
+        k.opacity(0.855),
         k.anchor(label.anchor),
         k.pos(label.pos),
         k.rotate(label.angle),

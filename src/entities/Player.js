@@ -7,6 +7,7 @@ import {
 } from "../store";
 import updatePlayerAnimation from "./player/PlayerAnimations";
 import { PlayerState, updatePlayerState } from "./player/PlayerState";
+import createPlayerInput from "./player/PlayerInput";
 
 export default function makePlayer(k, posVec2, speed) {
     const player = k.add([
@@ -35,50 +36,33 @@ export default function makePlayer(k, posVec2, speed) {
         store.get(isEmailModalVisibleAtom) ||
         store.get(isProjectModalVisibleAtom);
 
-    k.camPos(player.pos);
+    k.setCamPos(player.pos);
+    const getDirection = createPlayerInput(k);
+
+    
 
 
     player.onUpdate(() => {
         // smooth like butter cam flow
-        k.camPos(
-            k.camPos().lerp(player.pos, 1 - Math.exp(-6 * k.dt()))
+        k.setCamPos(
+            k.getCamPos().lerp(player.pos, 1 - Math.exp(-6 * k.dt()))
         );
 
-        let dir = k.vec2(0, 0);
-
-        if (!isUiOpen()) {
-            if (k.isKeyDown("left") || k.isKeyDown("a")) dir.x -= 1;
-            if (k.isKeyDown("right") || k.isKeyDown("d")) dir.x += 1;
-            if (k.isKeyDown("up") || k.isKeyDown("w")) dir.y -= 1;
-            if (k.isKeyDown("down") || k.isKeyDown("s")) dir.y += 1;
-
-            //tap to move
-            if (dir.len() === 0 && k.isMouseDown("left")) {
-                const toMouse = k.toWorld(k.mousePos()).sub(player.pos);
-                if (toMouse.len() > 40) dir = toMouse;
-            }
-        }
+        const dir = isUiOpen()
+            ? k.vec2(0, 0)
+            : getDirection(player);
 
         if (dir.len() > 0) {
-            
-            if (Math.abs(dir.x) > Math.abs(dir.y)) {
-                dir = k.vec2(Math.sign(dir.x), 0);
-            } else {
-                dir = k.vec2(0, Math.sign(dir.y));
-            }
 
             player.facing = 
-                Math.abs(dir.x) > Math.abs(dir.y)
+                dir.x !== 0
                     ? dir.x > 0 ? "right" : "left"
-                    : dir.y > 0 ? "down" : "up";
+                    : dir.y > 0 ? "down"  : "up";
             player.move(dir.scale(speed));
         }
         player.direction = dir
 
         updatePlayerState(player, dir.len() > 0, k.dt());
-
         updatePlayerAnimation(k, player);
-
     });
-
 }

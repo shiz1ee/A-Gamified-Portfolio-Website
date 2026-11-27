@@ -136,5 +136,5 @@ export default function buildMap(k, map, cabinets, socials, skills) {
     });
 
 
-    makePlayer(k, point("spawn"), 700);
+    makePlayer(k, point("spawn"), 500);
 }

@@ -30,8 +30,9 @@ export default function makeCabinet(k, data, index, total) {
     ]);
 
     //top 
-    cab.add([
-        k.pos(0, 0),
+    k.add([
+        k.pos(data.x, data.y),
+        k.z(20),
         k.polygon([
             k.vec2(-W / 2, -H / 2),
             k.vec2(-W / 2 + 18, -H / 2 - TOP_DEPTH),

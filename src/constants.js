@@ -1,6 +1,7 @@
 export const PALETTE = {
     color1: "#d4d5e4", 
     color2: "#6bb0ea", 
+    color3: "#000000da",
     bg1: "#4a1d62",    
     bg2: "#a06bea",    
 };
