@@ -26,25 +26,34 @@ export default function GameModal() {
 
     return (
         <div className="game-modal">
-            <div className="game-modal-frame" style={{ borderColor: cabinet.color }}>
+            <div
+                className="game-modal-frame"
+                style={{ "--accent": cabinet.color }}>
                 <div className="game-modal-bar">
-                    <span>{cabinet.title}</span>
-                    <div>
+                    <div className="game-modal-heading">
+                        <span className="game-modal-label">ARCADE / PROJECT</span>
+                        <h2>{cabinet.title}</h2>
+                    </div>
+                    <div className="game-modal-actions">
                         {cabinet.url && (
-                            <button className="modal-btn" onClick={() => window.open(cabinet.url, "_blank")}>
+                            <button className="game-modal-btn" onClick={() => window.open(cabinet.url, "_blank")}>
                                 New tab
                             </button>
                         )}
-                        <button className="modal-btn" onClick={close}>Close (esc)</button>
+                        <button className="game-modal-btn" onClick={close}>Close (esc)</button>
                     </div>
                 </div>
                 {cabinet.url ? (
-                    <iframe
-                        className="game-modal-iframe"
-                        src={cabinet.url} 
-                        title={cabinet.title}
-                        allow="fullscreen; gamepad; autoplay"
-                    />
+                    <div className={`game-modal-viewport ${
+                        cabinet.id === "cafe" ? "scaled-preview" : ""
+                    }`}>
+                        <iframe
+                            className="game-modal-iframe"
+                            src={cabinet.url} 
+                            title={cabinet.title}
+                            allow="fullscreen; gamepad; autoplay"
+                        />
+                    </div>
                 ) : (
                     <div className="game-modal-soon">
                         <p>{cabinet.tagline}</p>
