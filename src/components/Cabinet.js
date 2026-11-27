@@ -2,6 +2,7 @@ import { activeCabinetAtom, store } from "../store"
 
 const W = 180;
 const H = 260;
+const TOP_DEPTH = 36;
 
 export default function makeCabinet(k, data, index, total) {
     const accent = k.Color.fromHex(data.color);
@@ -16,6 +17,29 @@ export default function makeCabinet(k, data, index, total) {
         k.body({ isStatic: true }),
         k.z(4),
         "cabinet",
+    ]);
+
+    k.add([
+        k.circle(1),
+        k.scale(W / 2 + 12, 18),
+        k.pos(data.x, data.y + H / 2),
+        k.anchor("center"),
+        k.color(0, 0, 0),
+        k.opacity(0.2),
+        k.z(3.9),
+    ]);
+
+    //top 
+    cab.add([
+        k.pos(0, 0),
+        k.polygon([
+            k.vec2(-W / 2, -H / 2),
+            k.vec2(-W / 2 + 18, -H / 2 - TOP_DEPTH),
+            k.vec2(W / 2 - 18, -H / 2 - TOP_DEPTH),
+            k.vec2(W / 2, -H / 2),
+        ]),
+        k.color(k.Color.fromHex("#35354f")),
+        k.outline(4, accent),
     ]);
 
     cab.add([
@@ -48,13 +72,42 @@ export default function makeCabinet(k, data, index, total) {
 
     //ctrl pannal
     cab.add([
-        k.rect(W - 40, 30, { radius: 4 }),
+        k.pos(0, 0),
+        k.polygon([
+            k.vec2(-W / 2 + 20, 60),
+            k.vec2(W / 2 - 20, 60),
+            k.vec2(W / 2 - 8, 96),
+            k.vec2(-W / 2 + 8, 96),
+        ]),
+        k.color(k.Color.fromHex("#383852")),
+        k.outline(3, accent),
+    ]);
+
+    /// controll panel front edge
+    cab.add([
+        k.rect(W - 16, 12),
         k.anchor("center"),
-        k.pos(0, 80),
-        k.color(k.Color.fromHex("#2a2a45")),
+        k.pos(0, 102),
+        k.color(k.Color.fromHex("#151524")),
     ]);
     cab.add([k.circle(8), k.anchor("center"), k.pos(-30, 80), k.color(accent)]);
     cab.add([k.circle(8), k.anchor("center"), k.pos(10, 80), k.color(255, 255, 255)]);
+
+    // lower cabinet base
+    k.add([
+        k.rect(W - 16, 18, { radius: 3 }),
+        k.anchor("center"),
+        k.pos(0, H / 2 - 13),
+        k.color(k.Color.fromHex("#11111f")),
+    ]);
+
+    //base hgithlight
+    k.add([
+        k.rect(W - 24, 3),
+        k.anchor("center"),
+        k.pos(0, H / 2 - 23),
+        k.color(k.Color.fromHex("#454560")),
+    ]);
 
     const prompt = cab.add([
         k.text("PRESS E TO PLAY", { font: "ibm-bold", size: 28 }),
@@ -65,9 +118,9 @@ export default function makeCabinet(k, data, index, total) {
     ]);
 
     // proximity zone infront of the arcade to detect the press of E 
-    const zoneCenter = k.vec2(data.x, data.y + H / 2 + 70);
+    const zoneCenter = k.vec2(data.x, data.y + H / 2 + 40);
     const ZONE_HALF_W = (W + 40) / 2;
-    const ZONE_HALF_H = 70;
+    const ZONE_HALF_H = 100;
     let near = false;
 
     const open = () => {
