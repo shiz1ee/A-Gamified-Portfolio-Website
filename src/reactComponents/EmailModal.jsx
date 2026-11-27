@@ -18,6 +18,7 @@ export default function EmailModal() {
                 setTimeout(() => {
                     setIsVisible(false);
                     setOnCopyMessage("");
+                    document.getElementById("game")?.focus();
                 }, 1200);
             },
         },
@@ -27,6 +28,7 @@ export default function EmailModal() {
             handler: () => {
                 setOnCopyMessage("");
                 setIsVisible(false);
+                document.getElementById("game")?.focus();
             },
         },
     ];
