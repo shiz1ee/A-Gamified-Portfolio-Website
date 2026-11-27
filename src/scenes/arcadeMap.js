@@ -3,6 +3,7 @@ import makePlayer from "../entities/Player";
 import makeSocialIcon from "../components/SocialIcon";
 import makeEmailIcon from "../components/EmailIcon";
 import { makeAppear } from "../utils";
+import addCollisions from "../systems/MapCollisions";
 
 const MAP_SCALE = 3;
 const FLIP_MASK = 0x1fffffff;
@@ -78,47 +79,7 @@ function addTIleLayers(k, map) {
     }
 }
 
-function addCollisions(k, map) {
-    const TILE = map.tilewidth * MAP_SCALE;
-    let total = 0;
 
-    for (const layer of map.layers) {
-        if (layer.type !== "tilelayer") continue;
-        const solid = layer.properties?.find((p) => p.name === "collision")?.value;
-        if (!solid) continue;
-
-        let filledTiles = 0;
-        let rects = 0;
-
-        for (let row = 0; row < map.height; row++) {
-            let start = -1;
-            for (let col = 0; col <= map.width; col++) {
-                const filled =
-                    col < map.width &&
-                    (layer.data[row * map.width + col] & FLIP_MASK) !== 0;
-
-                if (filled) filledTiles++;
-                if (filled && start < 0) start = col;
-
-                if (!filled && start >= 0) {
-                    k.add([
-                        k.pos(start * TILE, row * TILE),
-                        k.area({ shape: new k.Rect(k.vec2(0), (col - start) * TILE, TILE) }),
-                        k.body({ isStatic: true }),
-                        "wall",
-                    ]);
-                    rects++;
-                    start = -1;
-                }
-            }
-        }
-
-        console.log("collision:", layer.name, "| filled tiles:", filledTiles, "| rects:", rects);
-        total += rects;
-    }
-
-    console.log("collision total:", total, "| in scene:", k.get("wall").length);
-}
 
 //reading the point locations 
 function readPoints(k, map) {
@@ -138,7 +99,7 @@ function readPoints(k, map) {
 export default function buildMap(k, map, cabinets, socials, skills) {
     console.log("socials:", socials);
     addTIleLayers(k, map);
-    addCollisions(k, map);
+    addCollisions(k, map, MAP_SCALE);
     const point = readPoints(k, map);
 
     cabinets.forEach((c, i) => {

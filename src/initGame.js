@@ -9,7 +9,7 @@ export default async function initGame() {
     const cabinets = await (await fetch("./configs/cabinets.json")).json();
     const socials = await (await fetch("./configs/socialsData.json")).json();
     const skills = await (await fetch("./configs/skillsData.json")).json();
-    const map = await (await fetch("./maps/arcade(improved).json")).json();
+    const map = await (await fetch("./maps/arcade(improved-final).json")).json();
 
     const k = makeKaplayCtx();
     k.setBackground(k.Color.fromHex("#1a1a2e"))

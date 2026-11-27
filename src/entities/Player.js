@@ -13,7 +13,7 @@ export default function makePlayer(k, posVec2, speed) {
         k.sprite("adam-idle-animated", { anim: "down"}),
         k.scale(4),
         k.anchor("center"),
-        k.area({ shape: new k.Rect(k.vec2(0), 10, 20) }),
+        k.area({ shape: new k.Rect(k.vec2(0), 10, 5), offset: k.vec2(0, 13), }),
         k.body(),
         k.pos(posVec2),
         k.z(10),
