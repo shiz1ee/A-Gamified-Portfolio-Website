@@ -1,20 +1,6 @@
 const SPRITE_PATH = "./sprites/adam/";
 
 export default function loadPlayerAssets(k) {
-    k.loadSprite(
-        "adam-idle",
-        SPRITE_PATH + "Adam_idle_16x16.png",
-        {
-            sliceX: 4,
-            sliceY: 1,
-            anims: {
-                right: 0,
-                up: 1,
-                left: 2,
-                down: 3,
-            },
-        }
-    );
 
     k.loadSprite(
         "adam-idle-animated",
