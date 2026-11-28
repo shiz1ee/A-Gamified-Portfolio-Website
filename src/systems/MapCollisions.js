@@ -7,10 +7,11 @@ export default function addCollisions(k, map, scale) {
     let total = 0;
     let debugCollisions = false;
 
-    k.onKeyPress("f2", () => {
-        debugCollisions = !debugCollisions;
-    });
-
+    if (import.meta.env.DEV) {
+        k.onKeyPress("f2", () => {
+            debugCollisions = !debugCollisions;
+        });
+    }
     for (const layerName of COLLISION_LAYERS) {
         const layer = map.layers.find(
             (l) =>
@@ -68,8 +69,6 @@ export default function addCollisions(k, map, scale) {
             total++
         }
 
-        console.log(layerName, "| objects: ", layer.objects.length);
     }
 
-    console.log("custom colliders:", total);
 }
