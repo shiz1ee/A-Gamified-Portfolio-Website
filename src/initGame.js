@@ -2,6 +2,7 @@ import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
 import buildMap from "./scenes/arcadeMap";
 import loadPlayerAssets from "./entities/player/PlayerAssets";
+import initMusic from "./systems/MusicManager";
 
 export default async function initGame() {
 
@@ -48,4 +49,5 @@ k.onUpdate(() => {
 })
 
 buildMap(k, map, cabinets, socials, skills);
+initMusic();
 }
