@@ -23,6 +23,9 @@ export default function GameModal() {
     }, [cabinet, setCabinet]);
 
     if (!cabinet) return null;
+    const previewUrl = cabinet.type === "itch"
+        ? cabinet.embedUrl
+        : cabinet.url;
 
     return (
         <div className="game-modal">
@@ -43,15 +46,16 @@ export default function GameModal() {
                         <button className="game-modal-btn" onClick={close}>Close (esc)</button>
                     </div>
                 </div>
-                {cabinet.url ? (
+                {previewUrl ? (
                     <div className={`game-modal-viewport ${
                         cabinet.id === "cafe" ? "scaled-preview" : ""
                     }`}>
                         <iframe
                             className="game-modal-iframe"
-                            src={cabinet.url} 
+                            src={previewUrl} 
                             title={cabinet.title}
                             allow="fullscreen; gamepad; autoplay"
+                            allowFullScreen
                         />
                     </div>
                 ) : (
