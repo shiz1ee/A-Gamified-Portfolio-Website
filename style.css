@@ -295,3 +295,9 @@ canvas {
     margin-top: 12px;
     text-decoration: none;
 }
+
+.game-modal-frame.maximized {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}

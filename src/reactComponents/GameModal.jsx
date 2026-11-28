@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { activeCabinetAtom } from "../store";
 
 export default function GameModal() {
     const [cabinet, setCabinet] = useAtom(activeCabinetAtom);
+    const [isMaximized, setIsMaximized] = useState(false);
 
     const close = () => {
+        setIsMaximized(false);
         setCabinet(null);
         document.getElementById("game")?.focus();
     };
@@ -14,6 +16,7 @@ export default function GameModal() {
         if (!cabinet) return;
         const onKey = (e) => {
             if (e.key === "Escape") {
+                setIsMaximized(false);
                 setCabinet(null);
                 document.getElementById("game")?.focus();
             }
@@ -30,7 +33,7 @@ export default function GameModal() {
     return (
         <div className="game-modal">
             <div
-                className="game-modal-frame"
+                className={`game-modal-frame ${isMaximized ? "maximized" : ""}`}
                 style={{ "--accent": cabinet.color }}>
                 <div className="game-modal-bar">
                     <div className="game-modal-heading">
@@ -43,6 +46,9 @@ export default function GameModal() {
                                 New tab
                             </button>
                         )}
+                        <button className="game-modal-btn" onClick={() => setIsMaximized(!isMaximized)}>
+                            {isMaximized ? "Restore" : "Maximize"}
+                        </button>
                         <button className="game-modal-btn" onClick={close}>Close (esc)</button>
                     </div>
                 </div>
