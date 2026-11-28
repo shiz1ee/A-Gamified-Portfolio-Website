@@ -12,5 +12,6 @@ export const chosenProjectDataAtom = atom({
 });
 
 export const cameraZoomValueAtom = atom(0.75);
-
+export const musicVolumeAtom = atom(0.3);
+export const musicMutedAtom = atom(false);
 export const store = createStore();

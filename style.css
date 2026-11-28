@@ -301,3 +301,43 @@ canvas {
     height: 100%;
     border-radius: 0;
 }
+
+.audio-controller {
+    position: fixed;
+    bottom: 3vh;
+    right: 5vw;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+
+    background: #1a1a2ee8;
+    border: 1px solid var(--color4);
+    border-radius: 4px;
+    color: var(--color3);
+
+    font-size: 12px;
+}
+
+.audio-controller button {
+    background: transparent;
+    color: var(--color2);
+    border: 1px solid var(--color4);
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.audio-controller input {
+    width: 90px;
+    accent-color: var(color2);
+    cursor: pointer;
+}
+
+.audio-controller span {
+    min-width: 32px;
+    text-align: right;
+}
