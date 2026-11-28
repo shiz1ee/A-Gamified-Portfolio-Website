@@ -34,6 +34,7 @@ export default async function initGame() {
     k.loadSprite("email-logo", "./logos/email-logo.png");
     k.loadSprite("instagram-logo", "./logos/instagram-logo.png");
     k.loadSprite("itch-logo", "./logos/itch-logo.png");
+    k.loadSprite("godot-logo", "./logos/godot-logo.png");
     
 const initialZoom = k.width() < 1000 ? 0.5 : 0.45;
 

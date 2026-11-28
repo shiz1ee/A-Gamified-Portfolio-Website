@@ -97,7 +97,6 @@ function readPoints(k, map) {
 }
 
 export default function buildMap(k, map, cabinets, socials, skills) {
-    console.log("socials:", socials);
     addTIleLayers(k, map);
     addCollisions(k, map, MAP_SCALE);
     const point = readPoints(k, map);
