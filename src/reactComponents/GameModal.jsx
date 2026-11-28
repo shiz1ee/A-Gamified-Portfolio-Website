@@ -46,6 +46,28 @@ export default function GameModal() {
                         <button className="game-modal-btn" onClick={close}>Close (esc)</button>
                     </div>
                 </div>
+                <details className="game-modal-info">
+                    <summary>Project information</summary>
+
+                    <p>{cabinet.tagline}</p>
+
+                    <div className="game-modal-techno">
+                        {cabinet.technologies?.map((tech) => (
+                            <span key={tech}>{tech}</span>
+                        ))}
+                    </div>
+
+                    {cabinet.githubUrl && (
+                        <a
+                            className="game-modal-btn"
+                            href={cabinet.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            View source code
+                        </a>
+                    )}
+                </details>
                 {previewUrl ? (
                     <div className={`game-modal-viewport ${
                         cabinet.id === "cafe" ? "scaled-preview" : ""
@@ -61,7 +83,11 @@ export default function GameModal() {
                 ) : (
                     <div className="game-modal-soon">
                         <p>{cabinet.tagline}</p>
-                        <p>Coming soon...</p>
+                        <p>
+                            {cabinet.type === "itch" && cabinet.url
+                                ? "To play this game, download it from itch.io using the New tab button above."
+                                : "coming soon..."}
+                        </p>
                     </div>
                 )}
             </div>

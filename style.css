@@ -254,3 +254,44 @@ canvas {
     transform: scale(0.8);
     transform-origin: top left;
 }
+
+.game-modal-info {
+    padding: 10px 20px;
+    background: #151625;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    color: #d1d1df;
+    font-family: "ibm-regular";
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.game-modal-info summary {
+    color: var(--accent);
+    cursor: pointer;
+    user-select: none;
+}
+
+.game-modal-info p {
+    line-height: 1.6;
+}
+
+.game-modal-techno {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.game-modal-techno span {
+    padding: 4px 10px;
+    background: color-mix( in srgb, var(--accent) 30%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius: 3px;
+    color: var(--accent);
+    font-size: 12px;
+}
+
+.game-modal-info a {
+    display: inline-block;
+    margin-top: 12px;
+    text-decoration: none;
+}
