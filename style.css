@@ -333,7 +333,7 @@ canvas {
 
 .audio-controller input {
     width: 90px;
-    accent-color: var(color2);
+    accent-color: var(--color2);
     cursor: pointer;
 }
 

@@ -81,7 +81,7 @@ export default function initMusic() {
 
 
     audio.addEventListener("ended", () => {
-        const delay = MIN_DELAY + Math.random() * (MAX_DELAY = MIN_DELAY);
+        const delay = MIN_DELAY + Math.random() * (MAX_DELAY - MIN_DELAY);
 
         setTimeout(playNextTrack, delay);
     });
