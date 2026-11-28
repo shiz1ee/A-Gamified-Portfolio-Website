@@ -1,4 +1,5 @@
 import {atom, createStore} from "jotai";
+import { atomWithStorage } from "jotai/utils";
 export const isSocialModelVisibleAtom =atom(false);
 export const selectedLinkAtom = atom(null);
 export const selectedLinkDescriptionAtom = atom(null);
@@ -12,6 +13,12 @@ export const chosenProjectDataAtom = atom({
 });
 
 export const cameraZoomValueAtom = atom(0.75);
-export const musicVolumeAtom = atom(0.3);
-export const musicMutedAtom = atom(false);
+export const musicVolumeAtom = atomWithStorage(
+    "portfolio-music-volume", 0.3, undefined,
+    {getOnInit: true}
+);
+export const musicMutedAtom = atomWithStorage(
+    "portfolio-music-muted", false, undefined,
+    {getOnInit: true}
+);
 export const store = createStore();
